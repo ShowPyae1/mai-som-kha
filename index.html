@@ -1,165 +1,705 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="my">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mai Som Kha</title>
+    <title>မိုင်ဆွန်ခ သန့်စင်သောသောက်ရေသန့်</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Inter Font -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <!-- Google Fonts for Burmese - Noto Sans Myanmar -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Custom styles for the Inter font */
+        html {
+            scroll-behavior: smooth; /* Add smooth scroll behavior to the entire page */
+        }
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Noto Sans Myanmar', sans-serif; /* Using Noto Sans Myanmar for Pyidaungsu-like feel */
+            background-color: #EBF5F8; /* Very pale blue-grey background */
+            color: #333;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Noto Sans Myanmar', serif; /* Use the same for headings for consistency */
+            font-weight: 700; /* Bold for headings */
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem; /* Slightly more padding for a spacious feel */
+        }
+        .btn-elegant {
+            background-color: #4682B4; /* Steel Blue */
+            color: #FFFFFF; /* White text */
+            padding: 0.8rem 2.5rem;
+            border-radius: 9999px; /* Pill shape */
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            border: 1px solid #4682B4; /* Matching border */
+            transition: all 0.5s ease-in-out; /* Smoother transition for all properties */
+        }
+        .btn-elegant:hover {
+            background-color: #87CEEB; /* Sky Blue on hover */
+            color: #1A1A1A; /* Dark text on hover */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Stronger shadow */
+            transform: translateY(-3px); /* More pronounced lift */
+            border-color: #87CEEB; /* Matching border on hover */
+        }
+        .card-elegant {
+            background-color: #FFFFFF;
+            border-radius: 1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* Softer shadow */
+            transition: transform 0.5s ease, box-shadow 0.5s ease; /* Smoother transition for cards */
+        }
+        .card-elegant:hover {
+            transform: translateY(-7px); /* More pronounced lift on cards */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
+        }
+        .header-bg {
+            background: linear-gradient(to right, #4682B4, #366A9B); /* Blue gradient */
+        }
+        .hero-section {
+            background: linear-gradient(rgba(70, 130, 180, 0.5), rgba(70, 130, 180, 0.5)), url('https://placehold.co/1920x1080/BBDEFB/333333?text=Clean+Water+Ripples'); /* Light blue gradient overlay, light blue ripple image */
+            background-size: cover;
+            background-position: center;
+        }
+        .section-title {
+            position: relative;
+            padding-bottom: 0.5rem;
+            margin-bottom: 2.5rem;
+            display: inline-block; /* To make the pseudo-element underline only the text */
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background-color: #4682B4; /* Steel Blue accent */
+        }
+        .nav-link {
+            transition: color 0.5s ease; /* Smoother transition for nav links */
+        }
+        .nav-link:hover {
+            color: #BBDEFB; /* Lighter blue on hover */
+        }
+        input[type="text"], input[type="email"], input[type="number"], textarea {
+            transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for input focus */
+        }
+        input[type="text"]:focus, input[type="email"]:focus, input[type="number"]:focus, textarea:focus {
+            border-color: #4682B4;
+            box-shadow: 0 0 0 3px rgba(70, 130, 180, 0.3);
+        }
+
+        /* Styles for the custom modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease; /* Smoother modal transition */
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            transform: translateY(-30px); /* More pronounced initial translateY */
+            transition: transform 0.4s ease; /* Smoother modal content transition */
+        }
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        /* Loading Spinner */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        .loading-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .spinner {
+            border: 8px solid #f3f3f3; /* Light grey */
+            border-top: 8px solid #4682B4; /* Steel Blue */
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Tab content styling */
+        .tab-content-section {
+            transition: opacity 0.5s ease-in-out;
+        }
+        .tab-content-section.hidden {
+            opacity: 0;
+            height: 0; /* Collapse height when hidden */
+            overflow: hidden; /* Hide overflowing content */
+        }
+        .tab-button {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            background-color: #F0F8FF; /* Light background for inactive tabs */
+            color: #4682B4; /* Text color matching theme */
+        }
+        .tab-button.active {
+            background-color: #4682B4; /* Active tab color */
+            color: #FFFFFF; /* Active tab text color */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .tab-button:hover:not(.active) {
+            background-color: #BBDEFB; /* Lighter blue on hover for inactive */
+            color: #1A1A1A;
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-blue-50 to-white text-gray-800 antialiased">
+<body class="antialiased leading-relaxed">
 
-    <!-- Header Section -->
-    <header class="bg-white shadow-lg py-4 px-6 md:px-12 rounded-b-xl">
-        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
-            <!-- Logo - Replace 'your-logo.png' with your actual logo image URL -->
-            <div class="flex items-center mb-4 md:mb-0">
-                <img src="https://placehold.co/80x80/007BFF/FFFFFF?text=LOGO" alt="Company Logo" class="h-16 w-16 mr-4 rounded-full shadow-md object-cover">
-                <!-- Brand Name - Replace 'Your Brand Name' with your actual brand name -->
-                <h1 class="text-3xl font-bold text-blue-700 tracking-wide">Your Brand Name</h1>
-            </div>
-
-            <!-- Navigation - Add more links as needed -->
-            <nav>
-                <ul class="flex space-x-6 md:space-x-8 text-lg font-medium">
-                    <li><a href="#hero" class="text-blue-600 hover:text-blue-800 transition duration-300 ease-in-out">Home</a></li>
-                    <li><a href="#about" class="text-blue-600 hover:text-blue-800 transition duration-300 ease-in-out">About Us</a></li>
-                    <li><a href="#products" class="text-blue-600 hover:text-blue-800 transition duration-300 ease-in-out">Products</a></li>
-                    <li><a href="#contact" class="text-blue-600 hover:text-blue-800 transition duration-300 ease-in-out">Contact</a></li>
+    <!-- Main Content (now visible by default) -->
+    <div id="main-content">
+        <!-- Header Section -->
+        <header class="header-bg text-white shadow-lg py-4">
+            <nav class="container flex justify-between items-center">
+                <a href="#" class="text-3xl font-bold text-gray-100 tracking-wide">မိုင်ဆွန်ခ</a>
+                <ul class="flex space-x-8">
+                    <!-- Navigation links (tabs) -->
+                    <li><a href="#main-dashboard-section" class="nav-link text-lg font-light" onclick="window.showTab('main-dashboard-section')">ပင်မစာမျက်နှာ</a></li>
+                    <li><a href="#order-water-section" class="nav-link text-lg font-light" onclick="window.showTab('order-water-section')">ရေသန့်မှာယူရန်</a></li>
+                    <li><a href="#order-records-section" class="nav-link text-lg font-light" onclick="window.showTab('order-records-section')">မှာယူမှုမှတ်တမ်း</a></li>
+                    <li><a href="#contact-section" class="nav-link text-lg font-light" onclick="window.showTab('contact-section')">ဆက်သွယ်ရန်</a></li>
                 </ul>
             </nav>
-        </div>
-    </header>
+        </header>
 
-    <!-- Hero Section -->
-    <section id="hero" class="relative bg-blue-600 h-96 md:h-[600px] flex items-center justify-center overflow-hidden rounded-b-xl shadow-lg mt-8 mx-auto w-11/12">
-        <!-- Background Image - Replace 'your-website-photo.jpg' with your actual website photo URL -->
-        <img src="https://placehold.co/1920x1080/0A58A4/FFFFFF?text=Your+Website+Photo" alt="Pure Drinking Water" class="absolute inset-0 w-full h-full object-cover opacity-80 filter blur-sm">
-        <div class="absolute inset-0 bg-black opacity-40"></div>
-        <div class="relative z-10 text-center text-white px-4">
-            <h2 class="text-4xl md:text-6xl font-extrabold leading-tight mb-4 drop-shadow-md">Pure Water, Pure Life.</h2>
-            <p class="text-lg md:text-xl font-light mb-8 max-w-2xl mx-auto drop-shadow-sm">Delivering the highest quality drinking water directly to your home and business.</p>
-            <a href="#contact" class="bg-white text-blue-700 px-8 py-3 rounded-full text-lg font-semibold hover:bg-blue-100 transition duration-300 ease-in-out shadow-lg transform hover:scale-105">Get a Quote</a>
-        </div>
-    </section>
-
-    <!-- About Us Section -->
-    <section id="about" class="py-16 px-6 md:px-12 bg-white rounded-xl shadow-lg mt-8 mx-auto w-11/12">
-        <div class="container mx-auto text-center">
-            <h3 class="text-4xl font-bold text-blue-700 mb-8">About Our Commitment to Purity</h3>
-            <div class="flex flex-col md:flex-row items-center md:space-x-8">
-                <div class="md:w-1/2 mb-8 md:mb-0">
-                    <p class="text-lg leading-relaxed text-gray-700 mb-4">
-                        At <span class="font-semibold text-blue-600">Your Brand Name</span>, we are dedicated to providing the freshest, purest drinking water. Our state-of-the-art purification process ensures that every drop you consume meets the highest standards of quality and safety.
+        <!-- Tab Content Container -->
+        <div class="container py-8">
+            <!-- Main Dashboard Section (Home + Products) -->
+            <section id="main-dashboard-section" class="tab-content-section">
+                <!-- Hero Section (from original #home) -->
+                <div class="hero-section text-white py-32 md:py-48 text-center shadow-xl mb-12 rounded-lg">
+                    <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-tight leading-tight">
+                        မိုင်ဆွန်ခ သန့်စင်သောသောက်ရေသန့်။
+                    </h1>
+                    <p class="text-xl md:text-2xl font-light mb-10 max-w-3xl mx-auto opacity-90">
+                        သန့်ရှင်းလတ်ဆတ်မှုနှင့် ကျန်းမာရေးအတွက် အကောင်းဆုံး သောက်ရေသန့်ကို ရွေးချယ်ပါ။
                     </p>
-                    <p class="text-lg leading-relaxed text-gray-700">
-                        We believe that access to clean water is a fundamental right, and we are committed to sustainable practices that protect our planet's most precious resource for future generations. Trust us for your daily hydration needs.
+                    <a href="#products-in-dashboard" class="btn-elegant inline-block text-lg shadow-md hover:shadow-lg transform hover:scale-105">ထုတ်ကုန်များ ကြည့်ရှုရန်</a>
+                </div>
+
+                <!-- Products Section (from original #products) -->
+                <div id="products-in-dashboard" class="py-10 bg-[#F0F8FF] rounded-lg card-elegant">
+                    <div class="text-center mb-12">
+                        <h2 class="text-4xl font-bold text-gray-800 section-title">ကျွန်ုပ်တို့၏ ထုတ်ကုန်များ</h2>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 px-8">
+                        <!-- Product 1: 20 ml Bottle -->
+                        <div class="card-elegant p-6 flex flex-col items-center text-center">
+                            <img src="https://placehold.co/300x300/ADD8E6/000000?text=20ml+Water" alt="20ml Bottle" class="w-48 h-48 mb-4 object-contain rounded-xl shadow-md">
+                            <h3 class="text-2xl font-bold mb-2 text-gray-800">၂၀ မီလီလီတာ ရေသန့်ပုလင်း</h3>
+                            <p class="text-md text-gray-600 leading-relaxed">
+                                အိတ်ဆောင်အတွက် သင့်တော်သော အရွယ်အစား။
+                            </p>
+                        </div>
+                        <!-- Product 2: 80 ml Bottle -->
+                        <div class="card-elegant p-6 flex flex-col items-center text-center">
+                            <img src="https://placehold.co/300x300/87CEEB/000000?text=80ml+Water" alt="80ml Bottle" class="w-48 h-48 mb-4 object-contain rounded-xl shadow-md">
+                            <h3 class="text-2xl font-bold mb-2 text-gray-800">၈၀ မီလီလီတာ ရေသန့်ပုလင်း</h3>
+                            <p class="text-md text-gray-600 leading-relaxed">
+                                နေ့စဉ် သောက်သုံးရန် အဆင်ပြေစေရန်။
+                            </p>
+                        </div>
+                        <!-- Product 3: 20 Liter Bottle -->
+                        <div class="card-elegant p-6 flex flex-col items-center text-center">
+                            <img src="https://placehold.co/300x300/6495ED/000000?text=20L+Water" alt="20L Bottle" class="w-48 h-48 mb-4 object-contain rounded-xl shadow-md">
+                            <h3 class="text-2xl font-bold mb-2 text-gray-800">၂၀ လီတာ ရေသန့်ပုံး</h3>
+                            <p class="text-md text-gray-600 leading-relaxed">
+                                မိသားစုနှင့် ရုံးများအတွက် လုံလောက်သော ပမာဏ။
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Order Water Section (re-purposed from customer-reminder) -->
+            <section id="order-water-section" class="tab-content-section hidden py-20 bg-white rounded-lg card-elegant">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-bold text-gray-800 section-title">ရေသန့် မှာယူရန်</h2>
+                    <p class="text-xl text-gray-700 mt-4">
+                        သင်မှာယူလိုသော ရေသန့်ပမာဏကို ထည့်သွင်းပြီး မိုင်ဆွန်ခ စက်ရုံကို မှာယူနိုင်ပါသည်။
                     </p>
                 </div>
-                <div class="md:w-1/2">
-                    <img src="https://placehold.co/600x400/CCE0FF/007BFF?text=Our+Facility" alt="Water Purification Facility" class="w-full h-auto rounded-lg shadow-xl object-cover">
-                </div>
-            </div>
-        </div>
-    </section>
+                <div class="flex flex-col items-center space-y-8">
+                    <div class="w-full max-w-3xl p-8">
+                        <h3 class="text-2xl font-bold mb-6 text-gray-800">မှာယူလိုသော ပမာဏ ထည့်သွင်းပါ</h3>
+                        <div class="space-y-6">
+                            <!-- Product 1: 20 ml -->
+                            <div class="flex flex-col md:flex-row items-center justify-between p-4 bg-gray-50 rounded-lg shadow-sm">
+                                <label for="customerOrder20ml" class="text-lg font-medium text-gray-700 w-40 text-left md:text-right mb-2 md:mb-0 md:mr-4">၂၀ မီလီလီတာ:</label>
+                                <div class="flex items-center w-full md:w-auto">
+                                    <input type="number" id="customerOrder20ml" value="0" min="0" class="w-24 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4682B4] transition duration-200 text-center mr-4">
+                                    <span class="text-gray-600">ပုလင်း</span>
+                                </div>
+                                <button class="btn-elegant text-sm px-4 py-2 mt-4 md:mt-0 ml-0 md:ml-4" onclick="window.confirmAndSendOrder('20ml', '၂၀ မီလီလီတာ ရေသန့်ပုလင်း', 'ပုလင်း')">
+                                    မှာယူရန်
+                                </button>
+                            </div>
 
-    <!-- Products Section -->
-    <section id="products" class="py-16 px-6 md:px-12 bg-blue-50 rounded-xl shadow-lg mt-8 mx-auto w-11/12">
-        <div class="container mx-auto text-center">
-            <h3 class="text-4xl font-bold text-blue-700 mb-12">Our Pure Water Products</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Product Card 1 -->
-                <div class="bg-white rounded-lg shadow-xl p-6 transform hover:scale-105 transition duration-300 ease-in-out">
-                    <img src="https://placehold.co/300x300/B0E0FF/0056B3?text=Bottle+Water" alt="Bottled Water" class="w-full h-48 object-cover rounded-md mb-6">
-                    <h4 class="text-2xl font-bold text-blue-600 mb-3">Spring Water Bottles</h4>
-                    <p class="text-gray-700 mb-4">Naturally sourced, refreshing spring water, perfect for on-the-go hydration.</p>
-                    <button class="bg-blue-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-700 transition duration-300 ease-in-out shadow">Learn More</button>
-                </div>
+                            <!-- Product 2: 80 ml -->
+                            <div class="flex flex-col md:flex-row items-center justify-between p-4 bg-gray-50 rounded-lg shadow-sm">
+                                <label for="customerOrder80ml" class="text-lg font-medium text-gray-700 w-40 text-left md:text-right mb-2 md:mb-0 md:mr-4">၈၀ မီလီလီတာ:</label>
+                                <div class="flex items-center w-full md:w-auto">
+                                    <input type="number" id="customerOrder80ml" value="0" min="0" class="w-24 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4682B4] transition duration-200 text-center mr-4">
+                                    <span class="text-gray-600">ပုလင်း</span>
+                                </div>
+                                <button class="btn-elegant text-sm px-4 py-2 mt-4 md:mt-0 ml-0 md:ml-4" onclick="window.confirmAndSendOrder('80ml', '၈၀ မီလီလီတာ ရေသန့်ပုလင်း', 'ပုလင်း')">
+                                    မှာယူရန်
+                                </button>
+                            </div>
 
-                <!-- Product Card 2 -->
-                <div class="bg-white rounded-lg shadow-xl p-6 transform hover:scale-105 transition duration-300 ease-in-out">
-                    <img src="https://placehold.co/300x300/B0E0FF/0056B3?text=Dispenser+Water" alt="Water Dispenser Bottle" class="w-full h-48 object-cover rounded-md mb-6">
-                    <h4 class="text-2xl font-bold text-blue-600 mb-3">5-Gallon Dispenser Water</h4>
-                    <p class="text-gray-700 mb-4">Ideal for homes and offices, delivering crisp, clean water in bulk.</p>
-                    <button class="bg-blue-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-700 transition duration-300 ease-in-out shadow">Learn More</button>
-                </div>
-
-                <!-- Product Card 3 -->
-                <div class="bg-white rounded-lg shadow-xl p-6 transform hover:scale-105 transition duration-300 ease-in-out">
-                    <img src="https://placehold.co/300x300/B0E0FF/0056B3?text=Filtered+System" alt="Water Filtration System" class="w-full h-48 object-cover rounded-md mb-6">
-                    <h4 class="text-2xl font-bold text-blue-600 mb-3">Advanced Filtration Systems</h4>
-                    <p class="text-gray-700 mb-4">Integrated solutions for superior water quality directly from your tap.</p>
-                    <button class="bg-blue-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-700 transition duration-300 ease-in-out shadow">Learn More</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Call to Action / Testimonials (Optional, but good for trust) -->
-    <section class="py-16 px-6 md:px-12 bg-gradient-to-r from-blue-700 to-blue-900 text-white text-center rounded-xl shadow-lg mt-8 mx-auto w-11/12">
-        <div class="container mx-auto">
-            <h3 class="text-4xl font-bold mb-6">What Our Customers Say</h3>
-            <blockquote class="text-xl md:text-2xl italic font-light max-w-3xl mx-auto mb-6">
-                "We've been using <span class="font-semibold">Your Brand Name</span> for years, and the water quality is consistently excellent. Highly recommend!"
-            </blockquote>
-            <p class="text-lg font-medium">- Satisfied Customer, City Name</p>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-16 px-6 md:px-12 bg-white rounded-xl shadow-lg mt-8 mb-8 mx-auto w-11/12">
-        <div class="container mx-auto text-center">
-            <h3 class="text-4xl font-bold text-blue-700 mb-8">Get In Touch With Us</h3>
-            <p class="text-lg text-gray-700 mb-8">Have questions or ready to place an order? Contact us today!</p>
-            <div class="flex flex-col md:flex-row justify-center items-center md:space-x-12 space-y-8 md:space-y-0">
-                <!-- Contact Info -->
-                <div class="text-center">
-                    <h4 class="text-2xl font-semibold text-blue-600 mb-4">Contact Information</h4>
-                    <p class="text-lg text-gray-700 mb-2"><strong class="text-blue-500">Phone:</strong> +1 (123) 456-7890</p>
-                    <p class="text-lg text-gray-700 mb-2"><strong class="text-blue-500">Email:</strong> info@yourbrandname.com</p>
-                    <p class="text-lg text-gray-700"><strong class="text-blue-500">Address:</strong> 123 Water Street, Hydration City, H2O 98765</p>
-                </div>
-
-                <!-- Contact Form (Basic, for display) -->
-                <div class="w-full md:w-1/2 max-w-md bg-blue-50 p-8 rounded-lg shadow-md">
-                    <form action="#" method="POST" class="space-y-4">
-                        <div>
-                            <label for="name" class="block text-left text-gray-800 font-medium mb-1">Your Name</label>
-                            <input type="text" id="name" name="name" class="w-full px-4 py-2 rounded-md border border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="John Doe">
+                            <!-- Product 3: 20 Liter -->
+                            <div class="flex flex-col md:flex-row items-center justify-between p-4 bg-gray-50 rounded-lg shadow-sm">
+                                <label for="customerOrder20l" class="text-lg font-medium text-gray-700 w-40 text-left md:text-right mb-2 md:mb-0 md:mr-4">၂၀ လီတာ:</label>
+                                <div class="flex items-center w-full md:w-auto">
+                                    <input type="number" id="customerOrder20l" value="0" min="0" class="w-24 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4682B4] transition duration-200 text-center mr-4">
+                                    <span class="text-gray-600">ပုံး</span>
+                                </div>
+                                <button class="btn-elegant text-sm px-4 py-2 mt-4 md:mt-0 ml-0 md:ml-4" onclick="window.confirmAndSendOrder('20l', '၂၀ လီတာ ရေသန့်ပုံး', 'ပုံး')">
+                                    မှာယူရန်
+                                </button>
+                            </div>
                         </div>
-                        <div>
-                            <label for="email" class="block text-left text-gray-800 font-medium mb-1">Your Email</label>
-                            <input type="email" id="email" name="email" class="w-full px-4 py-2 rounded-md border border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="john.doe@example.com">
-                        </div>
-                        <div>
-                            <label for="message" class="block text-left text-gray-800 font-medium mb-1">Your Message</label>
-                            <textarea id="message" name="message" rows="4" class="w-full px-4 py-2 rounded-md border border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Tell us how we can help..."></textarea>
-                        </div>
-                        <button type="submit" class="w-full bg-blue-700 text-white px-6 py-3 rounded-md font-semibold hover:bg-blue-800 transition duration-300 ease-in-out shadow-lg transform hover:scale-105">Send Message</button>
-                    </form>
+                        <p class="text-lg mt-6 text-gray-600">
+                            <strong class="text-gray-900">သင်၏ User ID:</strong> <span id="displayUserId" class="break-words">...Loading...</span>
+                        </p>
+                    </div>
                 </div>
+            </section>
+
+            <!-- Order Records Section -->
+            <section id="order-records-section" class="tab-content-section hidden py-20 bg-white rounded-lg card-elegant">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-bold text-gray-800 section-title">မှာယူမှုမှတ်တမ်း</h2>
+                    <p class="text-xl text-gray-700 mt-4">
+                        သင်၏ ယခင်မှာယူမှုများကို ဤနေရာတွင် ကြည့်ရှုနိုင်ပါသည်။
+                    </p>
+                </div>
+                <div id="orderRecordsList" class="space-y-6 px-8">
+                    <p class="text-center text-gray-500">မှာယူမှုမှတ်တမ်း မရှိသေးပါ။</p>
+                </div>
+            </section>
+
+            <!-- Contact Section (moved to be a tab) -->
+            <section id="contact-section" class="tab-content-section hidden py-20 bg-white rounded-lg card-elegant">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-bold text-gray-800 section-title">ဆက်သွယ်ရန်</h2>
+                    <p class="text-xl text-gray-700 mt-4">
+                        မေးမြန်းလိုသည်များရှိပါက ကျွန်ုပ်တို့နှင့် ဆက်သွယ်နိုင်ပါသည်။
+                    </p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-12 mt-12 px-8">
+                    <div class="card-elegant p-8 text-left flex flex-col justify-center">
+                        <p class="text-xl font-semibold mb-4 text-gray-800">ကျွန်ုပ်တို့အဖွဲ့နှင့် ဆက်သွယ်ပါ</p>
+                        <p class="text-lg mb-2 text-gray-700"><strong class="text-gray-900">လိပ်စာ:</strong> နံပါတ် (၁၂၃)၊ မိုင်ဆွန်ခ လမ်း၊ ရေကြည်ရပ်ကွက်၊ မြစ်ကြီးနားမြို့။</p>
+                        <p class="text-lg mb-2 text-gray-700"><strong class="text-gray-900">ဖုန်း:</strong> +၉၅ ၉ ၇၇၇ ၁၂၃ ၄၅၆</p>
+                        <p class="text-lg mb-2 text-gray-700"><strong class="text-gray-900">အီးမေးလ်:</strong> info@maisomkha.com</p>
+                        <p class="text-lg text-gray-700"><strong class="text-gray-900">လုပ်ငန်းချိန်:</strong> တနင်္လာ - သောကြာ၊ နံနက် ၉:၀၀ - ညနေ ၅:၀၀</p>
+                    </div>
+                    <div class="card-elegant p-8">
+                        <form action="#" method="POST" class="space-y-6">
+                            <div>
+                                <label for="contact-name" class="block text-gray-700 text-lg font-medium mb-2 text-left">အမည်</label>
+                                <input type="text" id="contact-name" name="name" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4682B4]" placeholder="သင့်အမည်" required>
+                            </div>
+                            <div>
+                                <label for="contact-email" class="block text-gray-700 text-lg font-medium mb-2 text-left">အီးမေးလ်</label>
+                                <input type="email" id="contact-email" name="email" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4682B4]" placeholder="သင့်အီးမေးလ်" required>
+                            </div>
+                            <div>
+                                <label for="contact-message" class="block text-gray-700 text-lg font-medium mb-2 text-left">မက်ဆေ့ချ်</label>
+                                <textarea id="contact-message" name="message" rows="5" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4682B4]" placeholder="သင့်မက်ဆေ့ချ်" required></textarea>
+                            </div>
+                            <button type="submit" class="btn-elegant w-full text-lg shadow-md hover:scale-105 transform">ပို့ရန်</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Call to Action / Quote Section -->
+        <section class="py-20 bg-[#1E3A8A] text-white text-center shadow-inner"> <!-- Deep Navy Blue -->
+            <div class="container max-w-3xl">
+                <h2 class="text-4xl font-bold mb-6 leading-tight">
+                    "မိုင်ဆွန်ခ - သန့်ရှင်းသောရေ၊ ကျန်းမာသောဘဝ။"
+                </h2>
+                <p class="text-xl font-light opacity-80 mb-10">— မိုင်ဆွန်ခ ရေသန့်</p>
+                <a href="#contact-section" class="btn-elegant inline-block text-lg bg-white text-gray-800 border-white hover:bg-gray-200" onclick="window.showTab('contact-section')">ဆက်သွယ်ရန်</a>
+            </div>
+        </section>
+
+        <!-- Footer Section -->
+        <footer class="bg-gray-900 text-white py-8 shadow-inner">
+            <div class="container text-center text-md opacity-90">
+                <p>&copy; ၂၀၂၅ မိုင်ဆွန်ခ သန့်စင်သောသောက်ရေသန့်။ မူပိုင်ခွင့်များ ရရှိပြီး။</p>
+                <p class="mt-2">သန့်ရှင်းမှု၊ ကျန်းမာရေး၊ ယုံကြည်မှု။</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Custom Modal for Messages -->
+    <div id="customModalOverlay" class="modal-overlay">
+        <div class="modal-content">
+            <h3 id="modalTitle" class="text-2xl font-bold mb-4 text-gray-800"></h3>
+            <p id="modalMessage" class="text-lg text-gray-700 mb-6"></p>
+            <div id="modalButtons" class="flex justify-center space-x-4">
+                <!-- Buttons will be injected here by JS -->
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- Footer Section -->
-    <footer class="bg-blue-900 text-white py-6 px-6 md:px-12 text-center rounded-t-xl shadow-lg">
-        <div class="container mx-auto">
-            <p>&copy; 2023 Your Brand Name. All rights reserved.</p>
-            <div class="flex justify-center space-x-6 mt-4">
-                <a href="#" class="text-white hover:text-blue-200 transition duration-300 ease-in-out">Privacy Policy</a>
-                <a href="#" class="text-white hover:text-blue-200 transition duration-300 ease-in-out">Terms of Service</a>
-            </div>
-        </div>
-    </footer>
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
 
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, doc, getDoc, setDoc, query, where, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global Firebase variables
+        let app, db, auth, userId, userName = 'ဧည့်သည် (Guest)', userPhone = ''; // Default values
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+
+        // --- Firebase Initialization ---
+        async function initializeFirebase() {
+            if (Object.keys(firebaseConfig).length === 0) {
+                console.warn("Firebase config not provided. Firestore features will not be available.");
+                // Directly show main content if Firebase is not configured.
+                document.getElementById('main-content').classList.remove('hidden');
+                window.showTab('main-dashboard-section'); // Show the first tab
+                document.getElementById('displayUserId').textContent = "Firebase အမှား (Firebase Error)";
+                return;
+            }
+            try {
+                app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                // Directly sign in anonymously or with custom token
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+
+                onAuthStateChanged(auth, async (user) => {
+                    if (user) {
+                        userId = user.uid;
+                        // Since there's no login page, userName and userPhone remain defaults or are set by previous session
+                        // Attempt to load profile if it exists, otherwise use defaults
+                        const userDocRef = doc(db, `artifacts/${appId}/users/${userId}/profile`, 'info');
+                        const userDocSnap = await getDoc(userDocRef);
+                        if (userDocSnap.exists()) {
+                            const userData = userDocSnap.data();
+                            userName = userData.name || 'ဧည့်သည် (Guest)';
+                            userPhone = userData.phone || '';
+                        }
+                        
+                        document.getElementById('displayUserId').textContent = userId;
+                        window.loadOrderQuantities();
+                        document.getElementById('main-content').classList.remove('hidden');
+                        window.showTab('main-dashboard-section'); // Show main dashboard by default
+                        window.displayOrderRecords(); // Start listening for records
+                    } else {
+                        console.error("No user after authentication attempt, falling back to guest ID.");
+                        userId = crypto.randomUUID(); // Fallback for safety
+                        document.getElementById('displayUserId').textContent = userId + " (ဧည့်သည်)";
+                        window.loadOrderQuantities();
+                        document.getElementById('main-content').classList.remove('hidden');
+                        window.showTab('main-dashboard-section'); // Show main dashboard by default
+                        window.displayOrderRecords(); // Start listening for records
+                    }
+                    console.log("Firebase initialized. User ID:", userId);
+                });
+
+            } catch (error) {
+                console.error("Error initializing Firebase or signing in:", error);
+                document.getElementById('displayUserId').textContent = "အမှား (Error)";
+                // Ensure main content is visible even on Firebase error
+                document.getElementById('main-content').classList.remove('hidden');
+                window.showTab('main-dashboard-section'); // Show the first tab
+            }
+        }
+
+        // --- User Profile Management (no explicit login form anymore) ---
+        // These functions are simplified as they won't be triggered by a login form
+        // window.checkUserLoginStatus is implicitly handled within onAuthStateChanged
+        // window.saveUserProfile is now implicitly for contact form or future direct profile edits
+        window.saveUserProfile = async function(name, phone) { // Can be called directly if needed for other forms
+            if (!db || !userId) {
+                console.error("Cannot save profile: DB or User ID not available.");
+                return;
+            }
+            try {
+                const userDocRef = doc(db, `artifacts/${appId}/users/${userId}/profile`, 'info');
+                await setDoc(userDocRef, { name: name, phone: phone }, { merge: true });
+                userName = name;
+                userPhone = phone;
+                console.log("User profile saved/updated:", userName, userPhone);
+            } catch (e) {
+                console.error("Error saving user profile:", e);
+            }
+        }
+
+        // --- UI Visibility & Modals ---
+        // Login page specific functions are no longer needed
+        // window.showLoginPage and window.showMainContent are merged into initial load and tab switching
+
+        window.openModal = function(title, message, buttons = [{ text: 'နားလည်ပါပြီ', action: 'window.closeModal()' }]) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalMessage').innerHTML = message;
+
+            const modalButtonsDiv = document.getElementById('modalButtons');
+            modalButtonsDiv.innerHTML = '';
+
+            buttons.forEach(btn => {
+                const buttonElement = document.createElement('button');
+                buttonElement.textContent = btn.text;
+                buttonElement.className = 'btn-elegant text-sm px-6 py-3';
+                if (btn.styleClass) {
+                    buttonElement.classList.add(...btn.styleClass.split(' '));
+                }
+                buttonElement.onclick = new Function(btn.action);
+                modalButtonsDiv.appendChild(buttonElement);
+            });
+
+            document.getElementById('customModalOverlay').classList.add('active');
+        }
+
+        window.closeModal = function() {
+            document.getElementById('customModalOverlay').classList.remove('active');
+        }
+
+        window.showLoading = function() {
+            document.getElementById('loadingOverlay').classList.add('active');
+        }
+
+        window.hideLoading = function() {
+            document.getElementById('loadingOverlay').classList.remove('active');
+        }
+
+        // --- Tab Switching Logic ---
+        window.showTab = function(tabId) {
+            // Hide all tab content sections
+            document.querySelectorAll('.tab-content-section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            // Show the selected tab content
+            document.getElementById(tabId).classList.remove('hidden');
+
+            // Update active state of navigation links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${tabId}`) {
+                    link.classList.add('active');
+                }
+            });
+
+            // If the "Order Records" tab is selected, refresh records
+            if (tabId === 'order-records-section') {
+                window.displayOrderRecords();
+            }
+        }
+
+        // --- Order Quantity Management (replaces old stock management) ---
+        // Renamed from saveCustomerStockData to saveOrderQuantities
+        window.saveOrderQuantities = function() {
+            const orderData = {
+                '20ml': parseInt(document.getElementById('customerOrder20ml').value),
+                '80ml': parseInt(document.getElementById('customerOrder80ml').value),
+                '20l': parseInt(document.getElementById('customerOrder20l').value)
+            };
+            localStorage.setItem('customerOrderQuantities_' + userId, JSON.stringify(orderData));
+        }
+
+        // Renamed from loadCustomerStockData to loadOrderQuantities
+        window.loadOrderQuantities = function() {
+            const savedData = localStorage.getItem('customerOrderQuantities_' + userId);
+            if (savedData) {
+                const orderData = JSON.parse(savedData);
+                document.getElementById('customerOrder20ml').value = orderData['20ml'];
+                document.getElementById('customerOrder80ml').value = orderData['80ml'];
+                document.getElementById('customerOrder20l').value = orderData['20l'];
+            } else {
+                document.getElementById('customerOrder20ml').value = 0;
+                document.getElementById('customerOrder80ml').value = 0;
+                document.getElementById('customerOrder20l').value = 0;
+            }
+        }
+
+        // --- Send Order Logic with Confirmation ---
+        window.sendOrderLogic = async function(productId, productName, orderQuantity) {
+            window.closeModal();
+            if (!db || !userId) {
+                window.openModal("အမှား", "ဒေတာဘေ့စ်ကို ချိတ်ဆက်၍မရပါ (Database connection error)။ ကျေးဇူးပြု၍ ခဏအကြာတွင် ထပ်မံကြိုးစားပါ။");
+                return;
+            }
+
+            window.showLoading();
+
+            try {
+                const timestamp = new Date();
+                const docRef = await addDoc(collection(db, `artifacts/${appId}/public/data/customerOrders`), { // Changed collection name to 'customerOrders'
+                    userId: userId,
+                    userName: userName, // Will use default 'ဧည့်သည်' if not set
+                    userPhone: userPhone, // Will use '' if not set
+                    productId: productId,
+                    productName: productName,
+                    orderQuantity: orderQuantity, // Renamed to orderQuantity
+                    timestamp: timestamp,
+                    message: `${userName} (ဖုန်းနံပါတ်: ${userPhone || 'မသိရှိ'}) မှ ${productName} (${orderQuantity} ${getUnit(productId)}) ကို မှာယူပါသည်` // Updated message with fallback for phone
+                });
+                console.log("Order written with ID: ", docRef.id);
+                window.openModal(
+                    "မှာယူမှုလက်ခံရရှိပါပြီ", // Order Received
+                    `သင့်၏ ${productName} (${orderQuantity} ${getUnit(productId)}) မှာယူမှုကို လက်ခံရရှိပါပြီ။ မိုင်ဆွန်ခ အဖွဲ့မှ မကြာမီ ဆက်သွယ်ပါလိမ့်မည်။
+                    <br><br><strong>မှာယူသည့်အချိန်:</strong> ${timestamp.toLocaleString('my-MM')}`
+                );
+                window.saveOrderQuantities(); // Save the new order quantity to localStorage after successful send
+            } catch (e) {
+                console.error("Error adding document: ", e);
+                window.openModal("အမှား", `မှာယူမှု ပေးပို့ရာတွင် အမှားအယွင်း ဖြစ်ပွားခဲ့ပါသည်။ ကျေးဇူးပြု၍ ထပ်မံကြိုးစားပါ။ (Error sending order. Please try again.)<br><br>အသေးစိတ်: ${e.message}`);
+            } finally {
+                window.hideLoading();
+            }
+        }
+
+        // Helper to get unit name
+        function getUnit(productId) {
+            if (productId === '20l') return 'ပုံး';
+            return 'ပုလင်း';
+        }
+
+        // Main function to trigger order confirmation
+        window.confirmAndSendOrder = function(productId, productName, unit) {
+            const orderQuantity = parseInt(document.getElementById(`customerOrder${productId}`).value);
+
+            if (orderQuantity <= 0) {
+                window.openModal("သတိပေးချက်", "ကျေးဇူးပြု၍ မှာယူလိုသော ပမာဏကို ထည့်သွင်းပါ။");
+                return;
+            }
+
+            const message = `သင်၏ ${productName} ပမာဏ ${orderQuantity} ${unit} ဖြစ်ကြောင်း မိုင်ဆွန်ခ စက်ရုံသို့ မှာယူရန် အတည်ပြုလိုပါသလား။`;
+
+            window.openModal(
+                "မှာယူမှု အတည်ပြုပါ", // Confirm Order
+                message,
+                [
+                    { text: 'အတည်ပြုသည်', action: `window.sendOrderLogic('${productId}', '${productName}', ${orderQuantity})` },
+                    { text: 'မလုပ်တော့ပါ', action: 'window.closeModal()', styleClass: 'bg-gray-500 hover:bg-gray-600 border-gray-500 hover:border-gray-600' }
+                ]
+            );
+        };
+
+        // --- Display Order Records ---
+        window.displayOrderRecords = function() {
+            const orderRecordsListDiv = document.getElementById('orderRecordsList');
+            orderRecordsListDiv.innerHTML = '<p class="text-center text-gray-500">မှာယူမှုမှတ်တမ်းများကို ဆွဲယူနေပါသည်။...</p>'; // Loading message
+
+            if (!db || !userId) {
+                orderRecordsListDiv.innerHTML = '<p class="text-center text-red-500">ဒေတာဘေ့စ်ကို ချိတ်ဆက်၍မရပါ သို့မဟုတ် အသုံးပြုသူအချက်အလက် မရရှိပါ။</p>';
+                return;
+            }
+
+            const q = query(
+                collection(db, `artifacts/${appId}/public/data/customerOrders`),
+                where("userId", "==", userId)
+            );
+
+            onSnapshot(q, (snapshot) => {
+                if (snapshot.empty) {
+                    orderRecordsListDiv.innerHTML = '<p class="text-center text-gray-500">မှာယူမှုမှတ်တမ်း မရှိသေးပါ။</p>';
+                    return;
+                }
+
+                const records = [];
+                snapshot.forEach((doc) => {
+                    const data = doc.data();
+                    records.push({ id: doc.id, ...data });
+                });
+
+                records.sort((a, b) => b.timestamp.toDate() - a.timestamp.toDate());
+
+                orderRecordsListDiv.innerHTML = ''; // Clear previous records
+
+                records.forEach(record => {
+                    const recordDate = record.timestamp ? record.timestamp.toDate().toLocaleString('my-MM') : 'မသိရှိ (Unknown)';
+                    const orderCard = `
+                        <div class="card-elegant p-6 flex flex-col md:flex-row items-start md:items-center justify-between space-y-4 md:space-y-0 md:space-x-4">
+                            <div>
+                                <p class="text-lg font-semibold text-gray-800">${record.productName}</p>
+                                <p class="text-md text-gray-700">မှာယူသော ပမာဏ: <strong class="text-blue-700">${record.orderQuantity} ${getUnit(record.productId)}</strong></p>
+                                <p class="text-sm text-gray-500">မှာယူသည့်အချိန်: ${recordDate}</p>
+                            </div>
+                            <div class="flex-shrink-0">
+                                <span class="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">လက်ခံရရှိပြီ</span>
+                            </div>
+                        </div>
+                    `;
+                    orderRecordsListDiv.insertAdjacentHTML('beforeend', orderCard);
+                });
+            }, (error) => {
+                console.error("Error fetching order records:", error);
+                orderRecordsListDiv.innerHTML = '<p class="text-center text-red-500">မှာယူမှုမှတ်တမ်းများကို ဆွဲယူရာတွင် အမှားဖြစ်ပွားခဲ့ပါသည်။</p>';
+            });
+        };
+
+
+        // --- Event Listener ---
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeFirebase();
+            // No login button listener needed as login page is removed
+        });
+    </script>
 </body>
 </html>
