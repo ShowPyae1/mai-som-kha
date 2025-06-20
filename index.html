@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>မိုင်ဆွန်ခ သောက်ရေသန့်</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <header>
+    <h1>မိုင်ဆွန်ခ သောက်ရေသန့်</h1>
+    <nav>
+      <ul>
+        <li><a href="#home">မူလစာမျက်နှာ</a></li>
+        <li><a href="#products">ထုတ်ကုန်များ</a></li>
+        <li><a href="#order">အော်ဒါတင်ရန်</a></li>
+        <li><a href="#records">မှတ်တမ်း</a></li>
+        <li><a href="#about">အကြောင်းအရာ</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="section">
+      <h2>မိုင်ဆွန်ခ သောက်ရေသန့်</h2>
+      <p>သန့်ရှင်းသောရေဖြင့် သင့်ကျန်းမာရေးအတွက်။</p>
+    </section>
+
+    <section id="products" class="section">
+      <h2>ထုတ်ကုန်များ</h2>
+      <ul>
+        <li>20 ml ပလတ်စတစ်ဗူး</li>
+        <li>80 ml ပလတ်စတစ်ဗူး</li>
+        <li>20 လီတာ ဂယ်လံ</li>
+      </ul>
+    </section>
+
+    <section id="order" class="section">
+      <h2>အော်ဒါတင်ရန်</h2>
+      <form id="orderForm">
+        <label>အမည်:
+          <input type="text" name="customer" required>
+        </label><br>
+
+        <label>ထုတ်ကုန်ရွေးချယ်ရန်:
+          <select name="product" required>
+            <option value="">ရွေးပါ</option>
+            <option value="20ml">20 ml</option>
+            <option value="80ml">80 ml</option>
+            <option value="20L">20 လီတာ</option>
+          </select>
+        </label><br>
+
+        <label>အရေအတွက်:
+          <input type="number" name="quantity" required min="1">
+        </label><br>
+
+        <button type="submit">အတည်ပြုရန်</button>
+      </form>
+    </section>
+
+    <section id="records" class="section">
+      <h2>မှတ်တမ်းများ</h2>
+      <form id="recordForm">
+        <label>အမည်:
+          <input type="text" name="name" required>
+        </label><br>
+
+        <label>ရက်စွဲ:
+          <input type="date" name="date" required>
+        </label><br>
+
+        <label>အော်ဒါအရေအတွက်:
+          <input type="number" name="qty" required>
+        </label><br>
+
+        <button type="submit">မှတ်တမ်းထည့်ရန်</button>
+      </form>
+
+      <div id="recordList">
+        <h3>မှတ်တမ်းစာရင်း</h3>
+        <ul></ul>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <h2>ကျွန်ုပ်တို့အကြောင်း</h2>
+      <p>
+        မိုင်ဆွန်ခ သောက်ရေသန့်သည် သန့်ရှင်းမှုအမြင့်မားဆုံးနည်းစနစ်ဖြင့်ဖန်တီးထားသောရေကို သုံးစွဲသူများထံသို့ပေးအပ်နေသောအရည်အသွေးမြင့်စက်ရုံဖြစ်ပါသည်။
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 မိုင်ဆွန်ခ သောက်ရေသန့်</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

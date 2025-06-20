@@ -1,0 +1,88 @@
+body {
+  font-family: 'Myanmar Text', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f2f2f2;
+  scroll-behavior: smooth;
+}
+
+header {
+  background: #0077cc;
+  color: white;
+  padding: 15px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.8em;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+nav li {
+  margin-right: 15px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.section {
+  padding: 50px 20px;
+  background: white;
+  margin: 10px;
+  border-radius: 10px;
+  transition: all 0.5s ease-in-out;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  color: #0077cc;
+}
+
+form label {
+  display: block;
+  margin: 10px 0 5px;
+}
+
+input, select, button {
+  padding: 10px;
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+button {
+  background: #0077cc;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #005fa3;
+}
+
+footer {
+  text-align: center;
+  background: #ddd;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+#recordList ul {
+  list-style: none;
+  padding-left: 0;
+}
